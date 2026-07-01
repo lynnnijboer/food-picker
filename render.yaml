@@ -10,7 +10,8 @@ services:
     runtime: docker
     plan: free
     healthCheckPath: /
-    preDeployCommand: php artisan migrate --force --seed
+    # NOTE: preDeployCommand requires a paid instance type, so on the free plan
+    # migrations/seeding run on container start via docker/entrypoint.d instead.
     envVars:
       - key: APP_KEY
         sync: false            # paste output of `php artisan key:generate --show`

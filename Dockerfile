@@ -28,6 +28,10 @@ RUN cp .env.example .env \
     && rm -f .env \
     && rm -rf node_modules
 
+# Run migrations + seeding on container start (Render's free plan skips
+# preDeployCommand). serversideup executes /etc/entrypoint.d/*.sh before boot.
+COPY --chmod=755 docker/entrypoint.d/ /etc/entrypoint.d/
+
 RUN chown -R www-data:www-data storage bootstrap/cache
 
 USER www-data
