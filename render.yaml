@@ -1,0 +1,40 @@
+databases:
+  - name: food-picker-db
+    plan: free
+    databaseName: food_picker
+    user: food_picker
+
+services:
+  - type: web
+    name: food-picker
+    runtime: docker
+    plan: free
+    healthCheckPath: /
+    preDeployCommand: php artisan migrate --force --seed
+    envVars:
+      - key: APP_KEY
+        sync: false            # paste output of `php artisan key:generate --show`
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      - key: APP_URL
+        sync: false            # e.g. https://food-picker.onrender.com
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_HOST
+        fromDatabase: { name: food-picker-db, property: host }
+      - key: DB_PORT
+        fromDatabase: { name: food-picker-db, property: port }
+      - key: DB_DATABASE
+        fromDatabase: { name: food-picker-db, property: database }
+      - key: DB_USERNAME
+        fromDatabase: { name: food-picker-db, property: user }
+      - key: DB_PASSWORD
+        fromDatabase: { name: food-picker-db, property: password }
+      - key: SESSION_DRIVER
+        value: database
+      - key: CACHE_STORE
+        value: database
+      - key: QUEUE_CONNECTION
+        value: database
