@@ -32,6 +32,7 @@ RUN cp .env.example .env \
 # preDeployCommand). serversideup executes /etc/entrypoint.d/*.sh before boot.
 COPY --chmod=755 docker/entrypoint.d/ /etc/entrypoint.d/
 
-RUN chown -R www-data:www-data storage bootstrap/cache
+# `database` is writable so the SQLite file can be created at runtime.
+RUN chown -R www-data:www-data storage bootstrap/cache database
 
 USER www-data
