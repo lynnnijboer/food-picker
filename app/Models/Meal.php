@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use Database\Factories\MealFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
@@ -14,6 +16,7 @@ use Illuminate\Support\Carbon;
  * @property int $time_minutes
  * @property string $difficulty
  * @property string $price
+ * @property int $base_servings
  * @property string $color_start
  * @property string $color_end
  * @property string $accent_color
@@ -29,6 +32,7 @@ use Illuminate\Support\Carbon;
     'time_minutes',
     'difficulty',
     'price',
+    'base_servings',
     'color_start',
     'color_end',
     'accent_color',
@@ -37,6 +41,9 @@ use Illuminate\Support\Carbon;
 ])]
 class Meal extends Model
 {
+    /** @use HasFactory<MealFactory> */
+    use HasFactory;
+
     /**
      * Get the attributes that should be cast.
      *
@@ -47,6 +54,7 @@ class Meal extends Model
         return [
             'time_minutes' => 'integer',
             'price' => 'decimal:2',
+            'base_servings' => 'integer',
             'ingredients' => 'array',
         ];
     }

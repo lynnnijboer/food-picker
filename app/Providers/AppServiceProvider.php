@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Carbon\CarbonImmutable;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
@@ -31,6 +32,11 @@ class AppServiceProvider extends ServiceProvider
      */
     protected function configureDefaults(): void
     {
+        // Inertia props are consumed directly by the frontend, not as a
+        // JSON:API-style response, so resources shouldn't be wrapped in a
+        // "data" envelope.
+        JsonResource::withoutWrapping();
+
         Date::use(CarbonImmutable::class);
 
         DB::prohibitDestructiveCommands(

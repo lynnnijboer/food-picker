@@ -8,6 +8,22 @@ Inertia allows you to build modern, single-page Vue applications using classic s
 
 This Vue starter kit utilizes Vue 3 and the Composition API, TypeScript, Tailwind, and the [shadcn-vue](https://www.shadcn-vue.com) component library.
 
+## Local Development with DDEV
+
+This project is configured to run locally with [DDEV](https://ddev.com). The app uses SQLite, so no database container is started.
+
+```bash
+ddev start
+ddev composer install
+ddev artisan key:generate
+ddev exec touch database/database.sqlite
+ddev artisan migrate --seed
+ddev npm install
+ddev npm run build   # or `ddev npm run dev` for Vite HMR
+```
+
+The site will then be available at `https://food-picker.ddev.site`.
+
 ## Official Documentation
 
 Documentation for all Laravel starter kits can be found on the [Laravel website](https://laravel.com/docs/starter-kits).
